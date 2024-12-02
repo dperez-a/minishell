@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fsantill <fsantill@student.42.fr>          +#+  +:+       +#+         #
+#    By: dani_mm__ <dani_mm__@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/15 11:19:51 by fsantill          #+#    #+#              #
-#    Updated: 2023/10/12 16:48:25 by fsantill         ###   ########.fr        #
+#    Updated: 2024/12/02 11:34:03 by dani_mm__        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ FT=		ft_isalpha.c	\
 		ft_isalnum.c	\
 		ft_isascii.c	\
 		ft_isprint.c	\
+		ft_isspace.c		\
 		ft_strlen.c		\
 		ft_memset.c		\
 		ft_bzero.c		\
