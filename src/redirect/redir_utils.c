@@ -1,4 +1,4 @@
-#include "../../inc/minishell.h"
+#include "../../minishell.h"
 
 const char *handle_output_redirection(const char *input, t_token **new_token)
 {

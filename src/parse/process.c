@@ -1,4 +1,4 @@
-#include "../../inc/minishell.h"
+#include "../../minishell.h"
 
 /**
  * process_other - Handles unrecognized characters in the input.

@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../minishell.h"
 
 t_token *tokenize_input(const char *input)
 {
