@@ -1,12 +1,11 @@
 #ifndef REDIRECT_H
 # define REDIRECT_H
+
 # include "../minishell.h"
-// 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
-//                                    〘REDIRECT〙
 
 //? src/redirect
 t_command   *process_redirection_tokens(t_token **tokens);
-t_token     **process_redirection_types(t_token **tokens, t_command *command);
+t_token     *process_redirection_types(t_token *tokens, t_command *command);
 
 //?redir_types.c
 t_token     *process_input_redirection(t_token *token, t_command *command);
