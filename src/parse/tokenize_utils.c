@@ -1,9 +1,9 @@
-#include "../inc/minishell.h"
+#include "../../minishell.h"
 
 //? create a new token
 t_token *create_token(const char *value, t_token_type type)
 {
-    t_token *token = malloc(sizeof(t_token));
+    t_token *token = ft_calloc(1, sizeof(t_token));
     if (!token)
         return NULL;
     token->value = strdup(value);  // copy the value

@@ -6,13 +6,12 @@
 /*   By: dani_mm__ <dani_mm__@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 11:19:54 by fsantill          #+#    #+#             */
-/*   Updated: 2024/12/02 11:29:46 by dani_mm__        ###   ########.fr       */
+/*   Updated: 2024/12/03 11:17:17 by dani_mm__        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include "../inc/minishell.h"
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>

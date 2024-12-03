@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../minishell.h"
 
 t_token *tokenize_input(const char *input)
 {
@@ -24,8 +24,7 @@ t_token *tokenize_input(const char *input)
 
 const char *skip_spaces(const char *input)
 {
-    while (isspace(*input))
+    while (ft_isspace(*input))
         input++;
     return input;
 }
-
