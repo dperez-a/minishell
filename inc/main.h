@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francrypto <francrypto@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 13:07:06 by francrypto        #+#    #+#             */
-/*   Updated: 2024/12/07 13:07:07 by francrypto       ###   ########.fr       */
+/*   Created: 2024/12/07 13:05:16 by francrypto        #+#    #+#             */
+/*   Updated: 2024/12/07 13:05:19 by francrypto       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#ifndef MAIN_H
+# define MAIN_H
+// 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
+//									   〘MAIN〙
+//? main.c
+void test_tokenize_input(const char *input);
 
-int main(void)
-{
-	return 0;
-}
+#endif

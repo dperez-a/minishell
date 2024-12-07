@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francrypto <francrypto@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dani_mm__ <dani_mm__@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 13:07:06 by francrypto        #+#    #+#             */
-/*   Updated: 2024/12/07 13:07:07 by francrypto       ###   ########.fr       */
+/*   Created: 2024/12/02 11:17:19 by dani_mm__         #+#    #+#             */
+/*   Updated: 2024/12/02 11:30:49 by dani_mm__        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-int main(void)
+int ft_isspace(int c)
 {
-	return 0;
+    return (c == ' ' || (c >= 9 && c <= 13));
 }

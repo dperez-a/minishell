@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: francrypto <francrypto@student.42.fr>      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/12/07 13:07:22 by francrypto        #+#    #+#              #
+#    Updated: 2024/12/07 13:07:22 by francrypto       ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 RED		=	\033[91;1m
 GREEN	=	\033[92;1m
 YELLOW	=	\033[93;1m
@@ -8,7 +20,9 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -I/opt/homebrew/opt/readline/inc #the last flag is for compiling readline on mac
 LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #ldflag for mac
-SRC = ./src/minishell.c 
+SRC = 	./src/main/main.c \
+		./src/parse/process.c ./src/parse/tokenize_input.c ./src/parse/tokenize_utils.c \
+		./src/redirect/redir_types.c ./src/redirect/redir_utils.c ./src/redirect/redir.c
 
 OBJ = $(SRC:.c=.o)
 LIBFT_DIR = libft
