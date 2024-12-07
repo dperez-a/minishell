@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: francrypto <francrypto@student.42.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 13:07:17 by francrypto        #+#    #+#             */
-/*   Updated: 2024/12/07 13:07:17 by francrypto       ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 // 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
@@ -26,5 +14,10 @@
 # include <stdlib.h>
 # include <string.h>
 # include <ctype.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <stdarg.h>
+# include <sys/wait.h>
 
 #endif
