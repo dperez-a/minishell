@@ -2,9 +2,16 @@
 
 t_command *process_redirection_tokens(t_token **tokens)
 {
+    if (!tokens || !(*tokens)) // Verifica que tokens sea válido
+    {
+        printf("Error: Tokens es NULL al inicio.\n");
+        return NULL;
+    }
+
     t_command *command = ft_calloc(1, sizeof(t_command));
     if (!command)
         return NULL;
+
     // Inicialización de campos a valores predeterminados
     command->command = NULL;
     command->input_file = NULL;
@@ -18,11 +25,13 @@ t_command *process_redirection_tokens(t_token **tokens)
         *tokens = (*tokens)->next;
     }
 
+    // Si encontramos un comando, asignarlo
     if (*tokens && (*tokens)->type == WORD)
     {
         command->command = ft_strdup((*tokens)->value);
         if (!command->command)
         {
+            printf("Error: No se pudo asignar memoria para el comando.\n");
             free(command);
             return NULL;
         }
@@ -39,10 +48,20 @@ t_command *process_redirection_tokens(t_token **tokens)
     while (*tokens && ((*tokens)->type == REDIR_IN || (*tokens)->type == REDIR_OUT ||
                        (*tokens)->type == APPEND || (*tokens)->type == HEREDOC))
     {
-        *tokens = process_redirection_types(*tokens, command);
+        t_token *new_token = process_redirection_types(*tokens, command);
+        if (!new_token) // Validar el resultado de process_redirection_types
+        {
+            printf("Error: Fallo al procesar redirección.\n");
+            free(command->command);
+            free(command);
+            return NULL;
+        }
+        *tokens = new_token; // Actualizar tokens
     }
+
     return command;
 }
+
 
 t_token *process_redirection_types(t_token *tokens, t_command *command)
 {
