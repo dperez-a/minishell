@@ -1,45 +1,21 @@
 #include "../../minishell.h"
 
-void test_tokenize_input(const char *input)
+void print_tokens(t_token *tokens)
 {
-    printf("Input: %s\n", input);
-    t_token *tokens = tokenize_input(input);
-    print_tokens(tokens);
-
-    // Procesar las redirecciones y construir los comandos
-    t_token *current_token = tokens;
-    while (current_token) {
-        if (current_token->type == REDIR_IN || current_token->type == REDIR_OUT || 
-            current_token->type == APPEND || current_token->type == HEREDOC) {
-            t_command *command = process_redirection_tokens(&current_token);
-            // Imprimir la información del comando procesado
-            if (command) {
-                printf("Command: %s\n", command->command);
-                printf("Input File: %s\n", command->input_file ? command->input_file : "None");
-                printf("Output File: %s\n", command->output_file ? command->output_file : "None");
-            }
-        }
-        current_token = current_token->next;
-    }
-
-    // Liberar tokens después de su uso
-    t_token *tmp;
+    printf("Lista de tokens:\n");
     while (tokens)
     {
-        tmp = tokens;
+        printf("Token: '%s', Type: %d\n", tokens->str, tokens->type);
         tokens = tokens->next;
-        free(tmp->value);
-        free(tmp);
     }
-    printf("\n");
+    printf("----------------------\n");
 }
 
 int main()
 {
-    // Casos de prueba
-    const char *inputs[] =
-    {
-        "echo $USER | grep 'hello world' > output.txt",
+    // Definimos algunas cadenas de prueba
+    const char *inputs[] = {
+        "echo hello world",
         "ls -la | grep minishell > result.txt",
         "cat < input.txt | sort > sorted.txt",
         "echo 'Hello, World!' >> greetings.txt",
@@ -48,9 +24,26 @@ int main()
     };
 
     int i = 0;
+
     while (inputs[i] != NULL)
     {
-        test_tokenize_input(inputs[i]);
+        printf("\nProcesando input: %s\n", inputs[i]);
+
+        // Creamos la estructura de datos para el lexer
+        t_data data;
+        data.token = NULL;
+        data.user_input = (char *)inputs[i];
+
+        // Ejecutamos la tokenización
+        if (tokenization(&data, data.user_input) == 0)
+        {
+            print_tokens(data.token);
+        }
+        else
+        {
+            printf("Error al tokenizar la cadena: %s\n", inputs[i]);
+        }
+
         i++;
     }
 
