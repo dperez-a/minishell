@@ -16,11 +16,11 @@ int main()
 {
     // Definimos algunas cadenas de prueba
     const char *inputs[] = {
-        "echo hello world",
-        "ls -la | grep minishell > result.txt",
-        "cat < input.txt | sort > sorted.txt",
-        "echo 'Hello, World!' >> greetings.txt",
-        "export PATH=$PATH:/new/path",
+        "cat 'hello world'",
+        // "ls -la | grep minishell > result.txt",
+        // "cat < input.txt | sort > sorted.txt",
+        // "echo 'Hello, World!' >> greetings.txt",
+        // "export PATH=$PATH:/new/path",
         NULL
     };
 
