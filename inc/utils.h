@@ -1,9 +1,12 @@
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef ERROR_H
+# define ERROR_H
 # include "../minishell.h"
+
 // 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
-//									   〘MAIN〙
-//? main.c
-void print_tokens(t_token *tokens);
+//                                     〘LEXER〙
+
+//? error.c
+void	errmsg(char *errmsg, char *detail, int quotes);
+void	free_ptr(void *ptr);
 
 #endif
