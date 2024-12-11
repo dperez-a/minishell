@@ -8,9 +8,12 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -I/opt/homebrew/opt/readline/inc #the last flag is for compiling readline on mac
 LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline #ldflag for mac
-SRC = 	./src/main/main.c \
-		./src/parse/process.c ./src/parse/tokenize_input.c ./src/parse/tokenize_utils.c \
-		./src/redirect/redir_types.c ./src/redirect/redir_utils.c ./src/redirect/redir.c
+SRC = 	./src/lexer/tokenizer.c \
+		./src/lexer/token_utils.c \
+		./src/lexer/token_lst_utils.c \
+		./src/lexer/token_lst_utils_2.c \
+		./src/main/main.c \
+		./src/utils/error.c
 
 OBJ = $(SRC:.c=.o)
 LIBFT_DIR = libft
