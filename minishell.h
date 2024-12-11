@@ -11,5 +11,7 @@
 # include "inc/lexer.h"
 # include "inc/inc.h"
 # include "inc/utils.h"
+# include "inc/define.h"
+# include "inc/debug.h"
 
 #endif

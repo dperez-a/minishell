@@ -1,0 +1,1 @@
+src/lexer/check_if_variable.c checkear más adelante

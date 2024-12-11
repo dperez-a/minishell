@@ -1,5 +1,6 @@
 #include "../../minishell.h"
 
+// Imprime la lista básica de tokens
 void print_tokens(t_token *tokens)
 {
     printf("Lista de tokens:\n");
@@ -37,11 +38,23 @@ int main()
         // Ejecutamos la tokenización
         if (tokenization(&data, data.user_input) == 0)
         {
-            print_tokens(data.token);
+            // Usamos las funciones de depuración
+            print_token_list(&data.token); // Depuración detallada de la lista de tokens
         }
         else
         {
             printf("Error al tokenizar la cadena: %s\n", inputs[i]);
+        }
+
+        // Liberamos la memoria de la lista de tokens después de cada prueba
+        t_token *tmp;
+        while (data.token)
+        {
+            tmp = data.token;
+            data.token = data.token->next;
+            free(tmp->str);
+            free(tmp->str_backup);
+            free(tmp);
         }
 
         i++;
@@ -49,3 +62,4 @@ int main()
 
     return 0;
 }
+
