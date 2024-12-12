@@ -17,9 +17,9 @@ int main()
     // Definimos algunas cadenas de prueba
     const char *inputs[] = {
         // "cat 'hello world'",
-        "echo Hola que tal | grep a",
+        // "echo Hola que tal | grep a",
         // "ls -la | grep minishell > result.txt'",
-        // "cat < input.txt | sort > sorted.txt",
+        "cat < input.txt | sort > sorted.txt",
         // "echo 'Hello, World!' >> greetings.txt",
         // "export PATH=$PATH:/new/path",
 

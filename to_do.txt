@@ -1,1 +1,9 @@
 src/lexer/check_if_variable.c checkear más adelante
+
+--- Token [4] [0x150e05cd0]
+        String = [|]
+        Str backup = [(null)]        revisar por qué en el backup me igual a null la pipe en este comando
+        Type = PIPE
+        Status = 0
+        Prev = [0x150e05c90]
+        Next = [0x150e05d20]

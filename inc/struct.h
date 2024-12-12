@@ -11,7 +11,7 @@
 typedef struct s_token
 {	
     char			*str;
-    char			*str_backup;
+    char			*str_backup;    // backup for the expansion changes
     bool			var_exists;
     int				type;
     int				status;

@@ -50,7 +50,6 @@ void remove_end_token(t_data *data)
             last_token->prev->next = NULL;
         else
             data->token = NULL; // Si es el único token, actualiza el puntero de la lista
-
         free(last_token->str);
         free(last_token);
     }
