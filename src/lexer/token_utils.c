@@ -2,73 +2,65 @@
 
 int	save_separator(t_token **token_lst, char *str, int index, int type)
 {
-	int		i;
+	int		length;
 	char	*sep;
 
-	i = 0;
-	if (type == APPEND || type == HEREDOC)
-	{
-		sep = ft_calloc(3, sizeof(char));
-		if (!sep)
-			return (1);
-		while (i < 2)
-			sep[i++] = str[index++];
-		sep[i] = '\0';
-		lst_add_back_token(token_lst, lst_new_token(sep, NULL, type, DEFAULT));
-	}
-	else
-	{
-		sep = ft_calloc(2, sizeof(char));
-		if (!sep)
-			return (1);
-		while (i < 1)
-			sep[i++] = str[index++];
-		sep[i] = '\0';
-		lst_add_back_token(token_lst, lst_new_token(sep, NULL, type, DEFAULT));
-	}
+	length = (type == APPEND || type == HEREDOC) ? 3 : 2; // Tamaño del separador
+	sep = ft_calloc(length, sizeof(char)); // Asignar memoria para el separador
+	if (!sep)
+		return (1);
+
+	// Copiar el separador en `sep`
+	for (int i = 0; i < length - 1; i++)
+		sep[i] = str[index++];
+
+	sep[length - 1] = '\0'; // Finalizar cadena
+	lst_add_back_token(token_lst, lst_new_token(sep, NULL, type, DEFAULT));
 	return (0);
 }
 
 int	save_word(t_token **token_lst, char *str, int index, int start)
 {
-	int		i;
 	char	*word;
+	int		length;
 
-	i = 0;
-	word = ft_calloc((index - start + 1),sizeof(char));
+	length = index - start;
+	if (length <= 0) // Evitar palabras vacías
+		return (0);
+
+	word = ft_calloc(length + 1, sizeof(char)); // Reservar memoria para la palabra
 	if (!word)
 		return (1);
-	while (start < index)
-	{
-		word[i] = str[start];
-		start++;
-		i++;
-	}
-	word[i] = '\0';
+
+	// Copiar la palabra desde `str`
+	ft_strlcpy(word, &str[start], length + 1);
+
 	lst_add_back_token(token_lst, \
-			lst_new_token(word, ft_strdup(word), WORD, DEFAULT));
+		lst_new_token(word, ft_strdup(word), WORD, DEFAULT));
 	return (0);
 }
 
+
 int	is_separator(char *str, int i)
 {
-	if (((str[i] > 8 && str[i] < 14) || str[i] == 32))
+	if (((str[i] > 8 && str[i] < 14) || str[i] == 32)) // Espacios
 		return (SPACES);
-	else if (str[i] == '|')
+	else if (str[i] == '|' && str[i + 1] != '|') // Validar `|` individual
 		return (PIPE);
-	else if (str[i] == '<' && str[i + 1] == '<')
+	else if (str[i] == '<' && str[i + 1] == '<') // `<<`
 		return (HEREDOC);
-	else if (str[i] == '>' && str[i + 1] == '>')
+	else if (str[i] == '>' && str[i + 1] == '>') // `>>`
 		return (APPEND);
-	else if (str[i] == '<')
+	else if (str[i] == '<') // `<`
 		return (INPUT);
-	else if (str[i] == '>')
+	else if (str[i] == '>') // `>`
 		return (TRUNC);
-	else if (str[i] == '\0')
+	else if (str[i] == '\0') // Fin de cadena
 		return (END);
 	else
-		return (0);
+		return (0); // No es separador
 }
+
 
 int	set_status(int status, char *str, int i)
 {
