@@ -14,13 +14,21 @@ void print_tokens(t_token *tokens)
 
 int main()
 {
-    // Definimos algunas cadenas de prueba
-    const char *inputs[] = {
-        "echo hello world",
-        "ls -la | grep minishell > result.txt",
-        "cat < input.txt | sort > sorted.txt",
-        "echo 'Hello, World!' >> greetings.txt",
-        "export PATH=$PATH:/new/path",
+    const char *inputs[] =
+    {
+        // "echo Hello world",
+        // "echo Hello World > output.log",
+        // "ls -la | grep minishell > result.txt",
+        // "ls -l | grep 'minishell' | awk '{print $1}'",
+        // "cat < input.txt | sort > sorted.txt",
+        // "echo 'Hello, World!' >> to_do.txt",
+        // "export PATH=$PATH:/new/path",
+        //!errores
+        "ls -la |",
+        "cat non_existent_file.txt > nonexistent_output.txt",
+        "echo 'Unclosed quote",
+        "echo $UNDEFINED_VAR",
+        "ls  -l >   > output.txt",
         NULL
     };
 
@@ -30,23 +38,19 @@ int main()
     {
         printf("\nProcesando input: %s\n", inputs[i]);
 
-        // Creamos la estructura de datos para el lexer
+        // date struct for the lexer
         t_data data;
         data.token = NULL;
         data.user_input = (char *)inputs[i];
 
-        // Ejecutamos la tokenización
+        // tokenize execution
         if (tokenization(&data, data.user_input) == 0)
-        {
-            // Usamos las funciones de depuración
-            print_token_list(&data.token); // Depuración detallada de la lista de tokens
-        }
+            // deb functions
+            print_token_list(&data.token); // token list depuration
         else
-        {
             printf("Error al tokenizar la cadena: %s\n", inputs[i]);
-        }
 
-        // Liberamos la memoria de la lista de tokens después de cada prueba
+        // free the memory of the tokens after the test
         t_token *tmp;
         while (data.token)
         {
@@ -56,10 +60,8 @@ int main()
             free(tmp->str_backup);
             free(tmp);
         }
-
         i++;
     }
-
     return 0;
 }
 
