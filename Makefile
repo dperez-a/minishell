@@ -6,8 +6,8 @@ CLEAR	=	\033[0m
 
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -I/opt/homebrew/opt/readline/inc # Flag para readline en macOS
-LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline # Flag para readline en macOS
+CFLAGS = -Wall -Wextra -Werror -g3 #-I/opt/homebrew/opt/readline/inc # Flag para readline en macOS
+LDFLAGS = -L/opt/homebrew/opt/readline/lib #-lreadline # Flag para readline en macOS
 
 # Rutas de fuentes y objetos
 SRC_DIR = ./src
