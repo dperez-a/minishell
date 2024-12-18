@@ -19,7 +19,10 @@ SRC = 	$(SRC_DIR)/lexer/tokenizer.c \
 		$(SRC_DIR)/lexer/token_lst_utils.c \
 		$(SRC_DIR)/lexer/token_lst_utils_2.c \
 		$(SRC_DIR)/main/main.c \
-		$(SRC_DIR)/debug/debug.c \
+		$(SRC_DIR)/debug/token_deb.c \
+		$(SRC_DIR)/debug/pipe_deb.c \
+		$(SRC_DIR)/parser/pipes.c \
+		$(SRC_DIR)/parser/redirections.c \
 		$(SRC_DIR)/utils/error.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
@@ -37,6 +40,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/main
 	@mkdir -p $(OBJ_DIR)/utils
 	@mkdir -p $(OBJ_DIR)/debug
+	@mkdir -p $(OBJ_DIR)/parser
 	@echo "$(YELLOW)Creando directorios de objetos en $(OBJ_DIR)...$(CLEAR)"
 
 # Regla principal para compilar el programa
