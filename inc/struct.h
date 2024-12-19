@@ -1,9 +1,23 @@
-
 #ifndef STRUCT_H
 # define STRUCT_H
 # include "../minishell.h"
 # include <stdbool.h>
 # include <sys/types.h>
+
+// 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
+//                                      〘ENV〙
+
+typedef struct s_env_var
+{
+    //* variable name *//
+    char    *key;
+
+    //* variable value *//
+    char    *value;
+
+    //* next variable on the list *//
+    struct s_env_var *next;
+}   t_env_var;
 
 // 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
 //                                    〘STRUCT〙
@@ -51,7 +65,7 @@ typedef struct s_data
     char        *user_input;   
     
     //* Variables de entorno *//
-    char        **env;    
+    char        *env;    
     
     //* Directorio de trabajo actual //*
     char        *working_dir;  
@@ -61,6 +75,8 @@ typedef struct s_data
     
     //* Información sobre el comando procesado *//
     t_command   *cmd;
+
+    t_env_var    *env_vars;
     
     //* ID del proceso en ejecución *//
     pid_t       pid;
@@ -102,5 +118,6 @@ enum e_token_types {
 	APPEND,
 	END
 };
+
 
 #endif
