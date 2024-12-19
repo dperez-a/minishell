@@ -1,17 +1,19 @@
 #include "../../minishell.h"
 
-// //! main to test how tokenization works
+int main(void)
+{
+    printf("Bienvenido a la miniconcha hispanoargentina. A partir de aquí manda papá\n");
+    interactive_shell(); // Llamamos al entorno interactivo
+    return 0;
+}
+
+//! main to test if the tokens and the pipes split are working
 // int main()
 // {
 //     // Definimos algunas cadenas de prueba
 //     const char *inputs[] = {
-//         // "cat 'hello world'",
-//         // "echo Hola que tal | grep a",
-//         // "ls -la | grep minishell > result.txt'",
 //         "cat < input.txt | sort > sorted.txt",
-//         // "echo 'Hello, World!' >> greetings.txt",
-//         // "export PATH=$PATH:/new/path",
-
+//         // "echo Hola que tal | grep a | wc -l > output.txt",
 //         NULL
 //     };
 
@@ -21,7 +23,7 @@
 //     {
 //         printf("\nProcesando input: %s\n", inputs[i]);
 
-//         // Creamos la estructura de datos para el lexer
+//         // Crear la estructura de datos para el lexer
 //         t_data data;
 //         data.token = NULL;
 //         data.user_input = (char *)inputs[i];
@@ -29,8 +31,29 @@
 //         // Ejecutamos la tokenización
 //         if (tokenization(&data, data.user_input) == 0)
 //         {
-//             // Usamos las funciones de depuración
-//             print_token_list(&data.token); // Depuración detallada de la lista de tokens
+//             // Usamos las funciones de depuración para los tokens
+//             print_token_list(&data.token);
+
+//             // Procesamos el pipeline
+//             t_pipeline *pipeline = process_pipeline(data.token);
+//             if (pipeline)
+//             {
+//                 print_pipeline(pipeline); // Imprimimos la estructura del pipeline
+//                 // Liberar la memoria del pipeline después del uso
+//                 for (int j = 0; j < pipeline->count; j++)
+//                 {
+//                     free(pipeline->commands[j]->command);
+//                     free(pipeline->commands[j]->input_file);
+//                     free(pipeline->commands[j]->output_file);
+//                     free(pipeline->commands[j]);
+//                 }
+//                 free(pipeline->commands);
+//                 free(pipeline);
+//             }
+//             else
+//             {
+//                 printf("Error: Falló el procesamiento del pipeline.\n");
+//             }
 //         }
 //         else
 //         {
@@ -54,71 +77,28 @@
 //     return 0;
 // }
 
-int main()
-{
-    // Definimos algunas cadenas de prueba
-    const char *inputs[] = {
-        "cat < input.txt | sort > sorted.txt",
-        // "echo Hola que tal | grep a | wc -l > output.txt",
-        NULL
-    };
+// //! main para el entorno
+// int main(int argc, char **argv, char **envp)
+// {
+//     (void)argc;
+//     (void)argv;
 
-    int i = 0;
+//     t_data data = {0};
+//     initialize_env(&data, envp);
 
-    while (inputs[i] != NULL)
-    {
-        printf("\nProcesando input: %s\n", inputs[i]);
+//     // Probar el comando `env`
+//     printf("Variables de entorno iniciales:\n");
+//     env_builtin(data.env_vars);
 
-        // Crear la estructura de datos para el lexer
-        t_data data;
-        data.token = NULL;
-        data.user_input = (char *)inputs[i];
+//     // Probar `export`
+//     printf("\nAñadiendo PATH_TEST...\n");
+//     export_builtin(&data.env_vars, "PATH_TEST", "/usr/local/bin");
+//     env_builtin(data.env_vars);
 
-        // Ejecutamos la tokenización
-        if (tokenization(&data, data.user_input) == 0)
-        {
-            // Usamos las funciones de depuración para los tokens
-            print_token_list(&data.token);
+//     // Probar `unset`
+//     printf("\nEliminando PATH_TEST...\n");
+//     unset_builtin(&data.env_vars, "PATH_TEST");
+//     env_builtin(data.env_vars);
 
-            // Procesamos el pipeline
-            t_pipeline *pipeline = process_pipeline(data.token);
-            if (pipeline)
-            {
-                print_pipeline(pipeline); // Imprimimos la estructura del pipeline
-                // Liberar la memoria del pipeline después del uso
-                for (int j = 0; j < pipeline->count; j++)
-                {
-                    free(pipeline->commands[j]->command);
-                    free(pipeline->commands[j]->input_file);
-                    free(pipeline->commands[j]->output_file);
-                    free(pipeline->commands[j]);
-                }
-                free(pipeline->commands);
-                free(pipeline);
-            }
-            else
-            {
-                printf("Error: Falló el procesamiento del pipeline.\n");
-            }
-        }
-        else
-        {
-            printf("Error al tokenizar la cadena: %s\n", inputs[i]);
-        }
-
-        // Liberamos la memoria de la lista de tokens después de cada prueba
-        t_token *tmp;
-        while (data.token)
-        {
-            tmp = data.token;
-            data.token = data.token->next;
-            free(tmp->str);
-            free(tmp->str_backup);
-            free(tmp);
-        }
-
-        i++;
-    }
-
-    return 0;
-}
+//     return 0;
+// }
