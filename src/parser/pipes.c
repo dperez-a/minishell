@@ -1,40 +1,44 @@
 #include "../../minishell.h"
 
+#include "../../minishell.h"
+
 t_token **split_by_pipes(t_token *tokens, int *num_pipes)
 {
-    t_token **pipe_segments;
-    t_token *current;
-    int count = 1; // Al menos un comando
+    t_token **segments = NULL;
+    t_token *current = tokens;
+    int count = 1; // Contamos al menos un segmento
 
-    current = tokens;
+    // Contar pipes para saber cuántos segmentos tendremos
     while (current)
     {
         if (current->type == PIPE)
             count++;
         current = current->next;
     }
+    *num_pipes = count;
 
-    pipe_segments = ft_calloc(count + 1, sizeof(t_token *)); // Reservar memoria
-    if (!pipe_segments)
-        return NULL;
+    // Reservar memoria para los segmentos
+    segments = ft_calloc(count + 1, sizeof(t_token *));
+    if (!segments)
+        return (NULL);
 
-    int i = 0;
+    // Dividir tokens por pipes
     current = tokens;
+    int i = 0;
+    segments[i++] = tokens;
     while (current)
     {
-        pipe_segments[i++] = current;
-        while (current && current->type != PIPE)
-            current = current->next;
-        if (current)
+        if (current->type == PIPE)
         {
-            t_token *next = current->next;
-            current->next = NULL; // Separar segmento
-            current = next;
+            current->str = NULL;  // No necesitamos el token `|` en los comandos
+            segments[i++] = current->next;
+            current->next = NULL; // Rompemos la lista aquí
         }
+        current = current->next;
     }
-    *num_pipes = count;
-    return pipe_segments;
+    return (segments);
 }
+
 
 t_pipeline *process_pipeline(t_token *tokens)
 {

@@ -2,10 +2,61 @@
 
 int main(void)
 {
-    printf("Bienvenido a la miniconcha hispanoargentina. A partir de aquí manda papá\n");
-    interactive_shell(); // Llamamos al entorno interactivo
+    t_data data;
+
+    // Inicializar el entorno
+    init_environment(&data);
+
+    // Definir el prompt con color y emoticono
+    const char *prompt_color = "\033[90m";  // Gris semi-transparente
+    const char *reset_color = "\033[0m";    // Resetear color
+    const char *prompt_emoticon = "🐚 ";
+    char *prompt = NULL;
+
+    // Construir el prompt
+    asprintf(&prompt, "%s%sminiconcha> %s", prompt_color, prompt_emoticon, reset_color);
+
+    while (true)
+    {
+        data.user_input = readline(prompt);
+        if (!data.user_input)
+        {
+            printf("\nSalir de miniconcha 🐚\n");
+            break;
+        }
+
+        if (*data.user_input)
+            add_history(data.user_input);
+
+        data.token = NULL;
+        if (tokenization(&data, data.user_input) == 0)
+        {
+            int num_pipes;
+            t_token **segments = split_by_pipes(data.token, &num_pipes);
+
+            printf("\nNúmero de comandos: %d\n", num_pipes);
+            for (int i = 0; i < num_pipes; i++)
+            {
+                printf("\nComando %d:\n", i + 1);
+                print_token_list(&segments[i]);
+            }
+            free(segments);
+        }
+        else
+        {
+            printf("Error al tokenizar la entrada.\n");
+        }
+
+        lstclear_token(&data.token, free);
+        free(data.user_input);
+    }
+
+    free(prompt);
     return 0;
 }
+
+
+
 
 //! main to test if the tokens and the pipes split are working
 // int main()

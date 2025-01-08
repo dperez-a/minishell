@@ -28,6 +28,7 @@ SRC = 	$(SRC_DIR)/lexer/tokenizer.c \
 		$(SRC_DIR)/env/builtins/env_builtin.c \
 		$(SRC_DIR)/env/builtins/export_builtin.c \
 		$(SRC_DIR)/env/builtins/unset_builtin.c \
+		$(SRC_DIR)/utils/enviroment_utils.c \
 		$(SRC_DIR)/utils/error.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
