@@ -4,6 +4,7 @@
 // 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
 //                                      {PARSER}
 
+
 //? pipes.c
 t_token     **split_by_pipes(t_token *tokens, int *num_pipes);
 t_pipeline  *process_pipeline(t_token *tokens);

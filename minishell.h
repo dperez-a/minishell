@@ -1,5 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#define TEST_MODE 1 // Cambia a 0 para activar el entorno interactivo
+
 // 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
 //									   〘MINISHELL〙
 
@@ -12,7 +15,6 @@
 # include "inc/lexer.h"
 # include "inc/parser.h"
 # include "inc/utils.h"
-# include "inc/debug.h"
 # include "inc/env.h"
 # include "inc/inc.h"
 # include "inc/define.h"

@@ -24,18 +24,13 @@ t_command *process_redirection_tokens(t_token **tokens)
     while (*tokens)
     {
         if ((*tokens)->type == WORD && !command->command)
-        {
             command->command = ft_strdup((*tokens)->str);
-        }
         else if ((*tokens)->type == INPUT || (*tokens)->type == TRUNC ||
                  (*tokens)->type == APPEND || (*tokens)->type == HEREDOC)
-        {
             // Llamar a funciones para manejar redirecciones específicas
             *tokens = handle_redirection(*tokens, command);
-        }
         *tokens = (*tokens)->next;
     }
-
     return command;
 }
 

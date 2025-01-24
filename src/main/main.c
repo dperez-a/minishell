@@ -1,155 +1,81 @@
 #include "../../minishell.h"
 
-int main(void)
-{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include "../../minishell.h"
+
+// Funciones de prueba
+void test_init_environment(void) {
     t_data data;
-
-    // Inicializar el entorno
     init_environment(&data);
+    if (data.env != NULL && data.working_dir != NULL && data.pid == getpid()) {
+        printf("test_init_environment: PASSED\n");
+    } else {
+        printf("test_init_environment: FAILED\n");
+    }
+}
 
-    // Definir el prompt con color y emoticono
-    const char *prompt_color = "\033[90m";  // Gris semi-transparente
-    const char *reset_color = "\033[0m";    // Resetear color
-    const char *prompt_emoticon = "🐚 ";
-    char *prompt = NULL;
+void test_tokenization(void) {
+    t_data data;
+    data.user_input = "echo hello";
+    int result = tokenization(&data, data.user_input);
+    if (result == 0 && data.token != NULL && strcmp(data.token->str, "echo") == 0 && strcmp(data.token->next->str, "hello") == 0) {
+        printf("test_tokenization: PASSED\n");
+    } else {
+        printf("test_tokenization: FAILED\n");
+    }
+    lstclear_token(&data.token, free);
+}
 
-    // Construir el prompt
-    asprintf(&prompt, "%s%sminiconcha> %s", prompt_color, prompt_emoticon, reset_color);
+void test_check_exit(void) {
+    t_data data;
+    data.user_input = "exit";
+    int result = check_exit(&data);
+    if (result == 1) {
+        printf("test_check_exit: PASSED\n");
+    } else {
+        printf("test_check_exit: FAILED\n");
+    }
+}
 
-    while (true)
-    {
+int main(void) {
+    // Ejecutar pruebas
+    test_init_environment();
+    test_tokenization();
+    test_check_exit();
+
+    // Código original del main
+    t_data data;
+    init_environment(&data);
+    char *prompt = create_prompt();
+
+    while (true) {
         data.user_input = readline(prompt);
-        if (!data.user_input)
-        {
-            printf("\nSalir de miniconcha 🐚\n");
+        if (check_exit(&data))
             break;
-        }
 
-        if (*data.user_input)
+        if (data.user_input && *data.user_input)
             add_history(data.user_input);
 
-        data.token = NULL;
-        if (tokenization(&data, data.user_input) == 0)
-        {
-            int num_pipes;
-            t_token **segments = split_by_pipes(data.token, &num_pipes);
-
-            printf("\nNúmero de comandos: %d\n", num_pipes);
-            for (int i = 0; i < num_pipes; i++)
-            {
-                printf("\nComando %d:\n", i + 1);
-                print_token_list(&segments[i]);
+        if (data.user_input && tokenization(&data, data.user_input) == 0) {
+            t_pipeline *pipeline = process_pipeline(data.token);
+            if (pipeline) {
+                // Ejecutar el pipeline
+                // execute_pipeline(pipeline);
+                // Liberar memoria del pipeline
+                // free_pipeline(pipeline);
+            } else {
+                printf("Error al procesar el pipeline.\n");
             }
-            free(segments);
-        }
-        else
-        {
+        } else {
             printf("Error al tokenizar la entrada.\n");
         }
 
-        lstclear_token(&data.token, free);
-        free(data.user_input);
+        cleanup_data(&data);
     }
 
     free(prompt);
     return 0;
 }
-
-
-
-
-//! main to test if the tokens and the pipes split are working
-// int main()
-// {
-//     // Definimos algunas cadenas de prueba
-//     const char *inputs[] = {
-//         "cat < input.txt | sort > sorted.txt",
-//         // "echo Hola que tal | grep a | wc -l > output.txt",
-//         NULL
-//     };
-
-//     int i = 0;
-
-//     while (inputs[i] != NULL)
-//     {
-//         printf("\nProcesando input: %s\n", inputs[i]);
-
-//         // Crear la estructura de datos para el lexer
-//         t_data data;
-//         data.token = NULL;
-//         data.user_input = (char *)inputs[i];
-
-//         // Ejecutamos la tokenización
-//         if (tokenization(&data, data.user_input) == 0)
-//         {
-//             // Usamos las funciones de depuración para los tokens
-//             print_token_list(&data.token);
-
-//             // Procesamos el pipeline
-//             t_pipeline *pipeline = process_pipeline(data.token);
-//             if (pipeline)
-//             {
-//                 print_pipeline(pipeline); // Imprimimos la estructura del pipeline
-//                 // Liberar la memoria del pipeline después del uso
-//                 for (int j = 0; j < pipeline->count; j++)
-//                 {
-//                     free(pipeline->commands[j]->command);
-//                     free(pipeline->commands[j]->input_file);
-//                     free(pipeline->commands[j]->output_file);
-//                     free(pipeline->commands[j]);
-//                 }
-//                 free(pipeline->commands);
-//                 free(pipeline);
-//             }
-//             else
-//             {
-//                 printf("Error: Falló el procesamiento del pipeline.\n");
-//             }
-//         }
-//         else
-//         {
-//             printf("Error al tokenizar la cadena: %s\n", inputs[i]);
-//         }
-
-//         // Liberamos la memoria de la lista de tokens después de cada prueba
-//         t_token *tmp;
-//         while (data.token)
-//         {
-//             tmp = data.token;
-//             data.token = data.token->next;
-//             free(tmp->str);
-//             free(tmp->str_backup);
-//             free(tmp);
-//         }
-
-//         i++;
-//     }
-
-//     return 0;
-// }
-
-// //! main para el entorno
-// int main(int argc, char **argv, char **envp)
-// {
-//     (void)argc;
-//     (void)argv;
-
-//     t_data data = {0};
-//     initialize_env(&data, envp);
-
-//     // Probar el comando `env`
-//     printf("Variables de entorno iniciales:\n");
-//     env_builtin(data.env_vars);
-
-//     // Probar `export`
-//     printf("\nAñadiendo PATH_TEST...\n");
-//     export_builtin(&data.env_vars, "PATH_TEST", "/usr/local/bin");
-//     env_builtin(data.env_vars);
-
-//     // Probar `unset`
-//     printf("\nEliminando PATH_TEST...\n");
-//     unset_builtin(&data.env_vars, "PATH_TEST");
-//     env_builtin(data.env_vars);
-
-//     return 0;
-// }
