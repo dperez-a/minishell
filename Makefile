@@ -30,7 +30,8 @@ SRC = 	$(SRC_DIR)/lexer/tokenizer.c \
 		$(SRC_DIR)/utils/enviroment_utils.c \
 		$(SRC_DIR)/utils/error.c \
 		$(SRC_DIR)/utils/minishell_prompt.c \
-		$(SRC_DIR)/utils/parser_errors.c
+		$(SRC_DIR)/utils/parser_errors.c \
+		$(SRC_DIR)/utils/validate.c 
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 

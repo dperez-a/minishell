@@ -82,3 +82,19 @@ t_pipeline *process_pipeline(t_token *tokens)
     free(segments);
     return pipeline;
 }
+
+void print_pipeline(t_pipeline *pipeline)
+{
+    printf("\nPipeline con %d comandos:\n", pipeline->count);
+    int i = 0;
+    while (i < pipeline->count)
+    {
+        t_command *cmd = pipeline->commands[i];
+        printf("Comando %d: %s\n", i + 1, cmd->command ? cmd->command : "None");
+        printf("  Archivo entrada: %s\n", cmd->input_file ? cmd->input_file : "None");
+        printf("  Archivo salida: %s\n", cmd->output_file ? cmd->output_file : "None");
+        printf("  Tipo redirección entrada: %d\n", cmd->input_redir_type);
+        printf("  Tipo redirección salida: %d\n", cmd->output_redir_type);
+        i++;
+    }
+}

@@ -4,10 +4,10 @@
 // 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
 //                                      {PARSER}
 
-
 //? pipes.c
 t_token     **split_by_pipes(t_token *tokens, int *num_pipes);
 t_pipeline  *process_pipeline(t_token *tokens);
+void print_pipeline(t_pipeline *pipeline);
 
 //? redirections.c
 t_command   *process_redirection_tokens(t_token **tokens);

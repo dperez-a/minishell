@@ -4,6 +4,12 @@
 # include <stdbool.h>
 # include <sys/types.h>
 
+// Definiciones de tipos de tokens
+#define WORD 1
+#define PIPE 2
+#define REDIR_IN 3
+#define REDIR_OUT 4
+
 // 〖─◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇│◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇──◇─〗
 //                                      〘ENV〙
 
@@ -109,9 +115,9 @@ typedef struct s_pipeline {
 // diferent token types
 enum e_token_types {
 	SPACES = 1,
-	WORD,
+	// WORD,
 	VAR,
-	PIPE,
+	// PIPE,
 	INPUT,
 	TRUNC,
 	HEREDOC,
