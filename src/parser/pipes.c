@@ -47,22 +47,29 @@ t_token **split_by_pipes(t_token *tokens, int *num_pipes)
 t_pipeline *process_pipeline(t_token *tokens)
 {
     int num_pipes;
-    t_token **segments = split_by_pipes(tokens, &num_pipes);
+    t_token **segments;
+
+    if (!tokens)
+        return (NULL);
+
+    segments = split_by_pipes(tokens, &num_pipes);
     if (!segments)
-        return NULL;
+        return (NULL);
+
+    if (num_pipes <= 0)
+    {
+        free(segments);
+        return (NULL);
+    }
+
     t_pipeline *pipeline = ft_calloc(1, sizeof(t_pipeline));
     if (!pipeline)
-    {
-        free(segments);
-        return NULL;
-    }
+        return (free(segments), NULL);
+
     pipeline->commands = ft_calloc(num_pipes, sizeof(t_command *));
     if (!pipeline->commands)
-    {
-        free(pipeline);
-        free(segments);
-        return NULL;
-    }
+        return (free(pipeline), free(segments), NULL);
+
     pipeline->count = num_pipes;
 
     int i = 0;
@@ -72,16 +79,51 @@ t_pipeline *process_pipeline(t_token *tokens)
         if (!pipeline->commands[i])
         {
             printf("Error: Fallo en el comando %d\n", i + 1);
-            free_pipeline(pipeline); // Ahora existe esta función
-            free(segments);
-            return NULL;
+            free_pipeline(pipeline);
+            return (free(segments), NULL);
         }
         i++;
     }
 
     free(segments);
-    return pipeline;
+    return (pipeline);
 }
+t_command *process_segments(t_token *tokens) {
+    t_command *command = ft_calloc(1, sizeof(t_command));
+    if (!command)
+        return NULL;
+
+    // Inicializar valores predeterminados
+    command->command = NULL;
+    command->input_file = NULL;
+    command->output_file = NULL;
+    command->input_redir_type = 0;
+    command->output_redir_type = 0;
+
+    // Buscar el comando principal
+    while (tokens && tokens->type != WORD)
+        tokens = tokens->next;
+    if (tokens && tokens->type == WORD) {
+        command->command = ft_strdup(tokens->str);
+        tokens = tokens->next;
+    } else {
+        printf("Error: No se encontró un comando válido.\n");
+        free(command);
+        return NULL;
+    }
+
+    // Llamar a funciones para manejar redirecciones específicas
+    while (tokens) {
+        tokens = handle_redirection(tokens, command);
+        if (!tokens) {
+            free(command);
+            return NULL;
+        }
+        tokens = tokens->next;
+    }
+    return command;
+}
+
 
 void print_pipeline(t_pipeline *pipeline)
 {
