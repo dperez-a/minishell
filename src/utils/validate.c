@@ -12,7 +12,8 @@ int validate_tokens(t_token *tokens)
     while (current)
     {
         // Verificar que no haya dos pipes consecutivos
-        if (current->type == PIPE && current->next && current->next->type == PIPE) {
+        if (current->type == PIPE && current->next && current->next->type == PIPE)
+        {
             printf("Error: No pueden haber dos pipes consecutivos.\n");
             return 1;
         }
@@ -31,7 +32,6 @@ int validate_tokens(t_token *tokens)
             printf("Error: No pueden haber redirecciones consecutivas.\n");
             return 1;
         }
-
         current = current->next;
     }
     // Verificar que el último token no sea un pipe
