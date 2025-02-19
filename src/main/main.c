@@ -1,42 +1,43 @@
 #include "../../minishell.h"
 
 // Funciones de prueba
-void test_init_environment(void) {
+void test_init_environment(void)
+{
     t_data data;
     init_environment(&data);
-    if (data.env != NULL && data.working_dir != NULL && data.pid == getpid()) {
+    if (data.env != NULL && data.working_dir != NULL && data.pid == getpid())
         printf("test_init_environment: PASSED\n");
-    } else {
+    else
         printf("test_init_environment: FAILED\n");
-    }
 }
 
-void test_tokenization(void) {
+void test_tokenization(void)
+{
     t_data data;
     data.user_input = "echo hello";
     int result = tokenization(&data, data.user_input);
-    if (result == 0 && data.token != NULL && strcmp(data.token->str, "echo") == 0 && strcmp(data.token->next->str, "hello") == 0) {
+    if (result == 0 && data.token != NULL && strcmp(data.token->str, "echo") == 0 && strcmp(data.token->next->str, "hello") == 0)
         printf("test_tokenization: PASSED\n");
-    } else {
+    else
         printf("test_tokenization: FAILED\n");
-    }
     lstclear_token(&data.token, free);
 }
 
-void test_check_exit(void) {
+void test_check_exit(void)
+{
     t_data data;
     data.user_input = "exit";
     printf("Debug: data.user_input = %s\n", data.user_input); // Mensaje de depuración
     int result = check_exit(&data);
     printf("Debug: result = %d\n", result); // Mensaje de depuración
-    if (result == 1) {
+    if (result == 1)
         printf("test_check_exit: PASSED\n");
-    } else {
+    else
         printf("test_check_exit: FAILED\n");
-    }
 }
 
-int main(void) {
+int main(void)
+{
     // Ejecutar pruebas
     test_init_environment();
     test_tokenization();
@@ -53,8 +54,11 @@ int main(void) {
         // "echo 'Hello World!' | wc -l",
         // "| invalid_start",
         // "invalid_command | | double_pipe",
-        // "echo hello | grep h | wc -l | sort > result.txt",
-        "echo hola > file1.txt > file2.txt",
+        "echo hello | grep h | wc -l | sort > result.txt",
+        // "echo hola > file1.txt > file2.txt",
+        // "echo hola mundo",
+        // "ls -l -a ",
+        // "grep 'txt' archivos.txt",
         NULL
     };
 
@@ -70,21 +74,23 @@ int main(void) {
         }
 
         // Tokenización
-        if (tokenization(&data, data.user_input) == 0) {
-            if (validate_tokens(data.token) == 0) {
+        if (tokenization(&data, data.user_input) == 0)
+        {
+            if (validate_tokens(data.token) == 0)
+            {
                 t_pipeline *pipeline = process_pipeline(data.token);
                 if (pipeline) {
                     print_pipeline(pipeline);
                     free_pipeline(pipeline);
-                } else {
+                } 
+                else
                     printf("Error: Fallo al procesar la tubería.\n");
-                }
-            } else {
-                printf("Error: Validación de tokens fallida.\n");
             }
-        } else {
-            printf("Error al tokenizar la entrada.\n");
+            else
+                printf("Error: Validación de tokens fallida.\n");
         }
+        else
+            printf("Error al tokenizar la entrada.\n");
 
         cleanup_data(&data);
         i++;

@@ -19,7 +19,9 @@ SRC = 	$(SRC_DIR)/lexer/tokenizer.c \
 		$(SRC_DIR)/lexer/token_lst_utils.c \
 		$(SRC_DIR)/lexer/token_lst_utils_2.c \
 		$(SRC_DIR)/main/main.c \
+		$(SRC_DIR)/parser/extract_arguments.c \
 		$(SRC_DIR)/parser/pipes.c \
+		$(SRC_DIR)/parser/process_redirection_tokens.c \
 		$(SRC_DIR)/parser/redirections.c \
 		$(SRC_DIR)/env/env_vars_init.c \
 		$(SRC_DIR)/env/env.c \

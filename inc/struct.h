@@ -46,6 +46,8 @@ typedef struct s_command {
     //* the command to execute *//
     char *command;
 
+    //*args of the command(includes the command like args[0])*//
+    char **args;
     //* input file *//
     char *input_file;
 

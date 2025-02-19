@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dani_mm__ <dani_mm__@student.42.fr>        +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/15 11:19:51 by fsantill          #+#    #+#              #
-#    Updated: 2024/12/02 11:34:03 by dani_mm__        ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME=libft.a
 CC=gcc
 CFLAGS=-Wall -Werror -Wextra
@@ -41,6 +29,7 @@ FT=		ft_isalpha.c	\
 		ft_strjoin.c	\
 		ft_strtrim.c	\
 		ft_split.c		\
+		ft_realloc.c	\
 		ft_itoa.c		\
 		ft_strmapi.c	\
 		ft_striteri.c	\
