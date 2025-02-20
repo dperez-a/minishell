@@ -46,20 +46,16 @@
 //     return segments;
 // }
 
-t_pipeline  *process_pipeline(t_token *tokens)
+t_pipeline  *process_pipeline(t_token *tokens, int num_pipes)
 {
-    int num_pipes;
     t_token **segments = split_by_pipes(tokens, &num_pipes);
-
     if (!segments)
         return NULL;
-    
     t_pipeline *pipeline = ft_calloc (1, sizeof(t_pipeline));
     if (!pipeline->commands)
         return NULL;
 
     pipeline->count = num_pipes;
-    
 }
 
 t_token **split_by_pipes(t_token *tokens, int *num_pipes)

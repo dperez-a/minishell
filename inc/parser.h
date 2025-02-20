@@ -6,7 +6,7 @@
 
 //? pipes.c
 t_token     **split_by_pipes(t_token *tokens, int *num_pipes);
-t_pipeline  *process_pipeline(t_token *tokens);
+t_pipeline  *process_pipeline(t_token *tokens, int num_pipes);
 t_command   *process_segments(t_token *tokens);
 void print_pipeline(t_pipeline *pipeline);//!se puede borrar, es una función de prueba
 
